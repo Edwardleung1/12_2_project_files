@@ -34,7 +34,20 @@ const ItemCtrl = (function () {
 // UI Controller
 const UICtrl = (function () {
   // Public methods
-  return {};
+  return {
+    populateItemList: function (items) {
+      let html = "";
+
+      items.forEach(function (item) {
+        html += `<li class="collection-item" id="item-${item.id}">
+        <strong>${item.name}: </strong> <em>${item.calories}Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      </li>`;
+      });
+    },
+  };
 })();
 
 // App Controller
@@ -42,7 +55,11 @@ const App = (function (ItemCtrl, UICtrl) {
   // Public methods
   return {
     init: function () {
-      console.log("Initializing App...");
+      // Fetch items from data structure
+      const items = ItemCtrl.getItems();
+
+      // Populate list with items
+      UICtrl.populateItemList(items);
     },
   };
 })(ItemCtrl, UICtrl);
